@@ -55,5 +55,15 @@ public class Trabajador {
     public String obtenerMesSueldo() {
         return mesSueldo;
     }
-    
+    @Override
+    public String toString(){
+        String data = String.format("Cédula: %s\n"
+                + "Nombre: %s\n"
+                +"Correro: %s\n"
+                +"Sueldo: %.2f\n"
+                +"Mes del Sueldo: %s\n", 
+                obtenerCedula(), obtenerNombres(),obtenerCorreo(),obtenerSueldo(),
+                obtenerMesSueldo());
+        return data;
+    }
 }

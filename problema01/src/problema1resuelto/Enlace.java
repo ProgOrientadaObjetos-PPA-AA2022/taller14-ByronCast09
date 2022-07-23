@@ -22,7 +22,7 @@ public class Enlace {
     public void establecerConexion() {
         try {
             // db parameters  
-            String url = "jdbc:sqlite:bd/base001.bd";
+            String url = "jdbc:sqlite:bd/trabajadores.base";
             // create a connection to the database  
             conn = DriverManager.getConnection(url);
             // System.out.println(conn.isClosed());
@@ -35,22 +35,19 @@ public class Enlace {
     public Connection obtenerConexion(){
         return conn;
     }
-    public void insertarTrabajador(Trabajador tb) { 
+    public void insertarTrabajador(Trabajador lostrabajadores) { 
         try{  
             establecerConexion();
             Statement statement = obtenerConexion().createStatement();
-            String data = String.format("INSERT INTO trabajadores (cedula,"
-                    + "nombres "
-                    + "correo"
-                    +"sueldo"
-                    +"mesSueldo('%s', %s,%s,%.2f,%s)", 
-                    tb.obtenerCedula(),tb.obtenerNombres(),tb.obtenerCorreo(),
-                    tb.obtenerSueldo(),tb.obtenerMesSueldo());
-            System.out.println(data);
+            String data = String.format("INSERT INTO lostrabajadores (Cedula,"
+                    + "Nombres, Correo, Sueldo, MesSueldo)"
+                    + "values ('%s', '%s', '%s', '%s', '%s')", lostrabajadores.obtenerCedula(),
+                    lostrabajadores.obtenerNombres(), lostrabajadores.obtenerCorreo(), 
+                    lostrabajadores.obtenerSueldo(), lostrabajadores.obtenerMesSueldo());
             statement.executeUpdate(data);
             obtenerConexion().close();
         } catch (SQLException e) {  
-             System.out.println("Exception:");
+             System.out.println("Exception: insertarTrabajador");
              System.out.println(e.getMessage());  
              
         }  
@@ -60,16 +57,15 @@ public class Enlace {
         try{  
             establecerConexion();
             Statement statement = obtenerConexion().createStatement();
-            String data = "Select * from trabajadores;";
+            String data = "Select * from Trabajador;";
             
             ResultSet rs = statement.executeQuery(data);
             while(rs.next()){
-                Trabajador trab = new Trabajador(rs.getString("cedula"),
-                rs.getString("nombre"),rs.getString("correo"),rs.getDouble("sueldo"),
-                        rs.getString("mesSueldo"));
+                Trabajador trab = new Trabajador(rs.getString("Cedula"),
+                rs.getString("Nombre"),rs.getString("Correo"),rs.getDouble("sueldo"),
+                        rs.getString("MesSueldo"));
                 lista.add(trab);
             }
-            
             obtenerConexion().close();
         } catch (SQLException e) {  
              System.out.println("Exception: insertarCiudad");
